@@ -11,8 +11,6 @@ let scale = 1.5;
 // Get DOM elements
 const canvas = document.getElementById('pdf-canvas');
 const ctx = canvas.getContext('2d');
-const pdfUpload = document.getElementById('pdf-upload');
-const loadSampleBtn = document.getElementById('load-sample');
 const prevPageBtn = document.getElementById('prev-page');
 const nextPageBtn = document.getElementById('next-page');
 const pageNumSpan = document.getElementById('page-num');
@@ -24,10 +22,13 @@ const pdfControls = document.getElementById('pdf-controls');
 const placeholder = document.querySelector('.placeholder');
 
 /**
- * Render the page
+ * Render the page with smooth transition
  */
 function renderPage(num) {
     pageRendering = true;
+
+    // Add loading class
+    canvas.classList.add('loading');
 
     pdfDoc.getPage(num).then(function(page) {
         const viewport = page.getViewport({ scale: scale });
@@ -43,6 +44,8 @@ function renderPage(num) {
 
         renderTask.promise.then(function() {
             pageRendering = false;
+            canvas.classList.remove('loading');
+
             if (pageNumPending !== null) {
                 renderPage(pageNumPending);
                 pageNumPending = null;
@@ -90,7 +93,7 @@ function onNextPage() {
 }
 
 /**
- * Update button states
+ * Update button states with smooth transitions
  */
 function updateButtons() {
     prevPageBtn.disabled = pageNum <= 1;
@@ -118,7 +121,7 @@ function onZoomOut() {
 }
 
 /**
- * Load and display PDF
+ * Load and display PDF with smooth animations
  */
 function loadPDF(url) {
     const loadingTask = pdfjsLib.getDocument(url);
@@ -127,10 +130,12 @@ function loadPDF(url) {
         pdfDoc = pdf;
         pageCountSpan.textContent = pdf.numPages;
 
-        // Show controls and canvas
-        pdfControls.style.display = 'flex';
-        canvas.classList.add('active');
-        placeholder.style.display = 'none';
+        // Smooth transition: hide placeholder, show controls and canvas
+        setTimeout(() => {
+            placeholder.style.display = 'none';
+            pdfControls.style.display = 'flex';
+            canvas.classList.add('active');
+        }, 300);
 
         // Reset to first page
         pageNum = 1;
@@ -138,52 +143,27 @@ function loadPDF(url) {
         updateButtons();
     }).catch(function(error) {
         console.error('Error loading PDF:', error);
-        alert('Error loading PDF: ' + error.message);
+        placeholder.querySelector('p').textContent = 'Error loading document: ' + error.message;
+        placeholder.classList.remove('loading');
     });
 }
 
 /**
- * Handle file upload
+ * Auto-load PDF on page load
+ * The PDF file should be named 'document.pdf' and placed in the root directory
  */
-pdfUpload.addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file && file.type === 'application/pdf') {
-        const fileReader = new FileReader();
-        fileReader.onload = function() {
-            const typedArray = new Uint8Array(this.result);
-            loadPDF(typedArray);
-        };
-        fileReader.readAsArrayBuffer(file);
-    } else {
-        alert('Please select a valid PDF file');
-    }
-});
+function autoLoadPDF() {
+    // Name of the PDF file in the root directory
+    const pdfFileName = 'document.pdf';
 
-/**
- * Load sample PDF - using a publicly available sample
- */
-loadSampleBtn.addEventListener('click', function() {
-    // Use a sample PDF from a CDN or create one
-    // For now, we'll use a sample PDF from PDF.js examples
-    const sampleURL = 'sample-article.pdf';
+    // Start loading animation
+    placeholder.classList.add('loading');
 
-    // Check if sample exists, otherwise use an external sample
-    fetch(sampleURL)
-        .then(response => {
-            if (response.ok) {
-                loadPDF(sampleURL);
-            } else {
-                // Fallback to an external sample PDF
-                loadPDF('https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf');
-            }
-        })
-        .catch(() => {
-            // If local sample doesn't exist, use external
-            loadPDF('https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf');
-        });
-});
+    // Load the PDF
+    loadPDF(pdfFileName);
+}
 
-// Event listeners
+// Event listeners for navigation
 prevPageBtn.addEventListener('click', onPrevPage);
 nextPageBtn.addEventListener('click', onNextPage);
 zoomInBtn.addEventListener('click', onZoomIn);
@@ -197,5 +177,12 @@ document.addEventListener('keydown', function(e) {
         onPrevPage();
     } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
         onNextPage();
+    } else if (e.key === '+' || e.key === '=') {
+        onZoomIn();
+    } else if (e.key === '-' || e.key === '_') {
+        onZoomOut();
     }
 });
+
+// Auto-load PDF when page loads
+window.addEventListener('DOMContentLoaded', autoLoadPDF);

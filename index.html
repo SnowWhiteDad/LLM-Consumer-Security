@@ -3,24 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Article Viewer</title>
+    <title>Reference Architecture for Securing Data Flows Across Enterprise AI Systems Consuming LLMs</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>PDF Article Viewer</h1>
-            <p>View and read PDF documents online</p>
+            <h1>Reference Architecture for Securing Data Flows Across Enterprise AI Systems Consuming LLMs</h1>
         </header>
-
-        <div class="upload-section">
-            <label for="pdf-upload" class="upload-button">
-                Choose PDF File
-                <input type="file" id="pdf-upload" accept=".pdf" style="display: none;">
-            </label>
-            <button id="load-sample" class="sample-button">Load Sample Article</button>
-        </div>
 
         <div id="pdf-controls" class="controls" style="display: none;">
             <button id="prev-page" class="control-btn">Previous</button>
@@ -44,7 +35,7 @@
                     <line x1="30" y1="45" x2="70" y2="45" stroke="#ddd" stroke-width="2"/>
                     <line x1="30" y1="55" x2="60" y2="55" stroke="#ddd" stroke-width="2"/>
                 </svg>
-                <p>Upload a PDF or load the sample article to begin</p>
+                <p>Loading document...</p>
             </div>
             <canvas id="pdf-canvas"></canvas>
         </div>
