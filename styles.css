@@ -74,6 +74,70 @@ header h1:hover {
     transform: scale(1.02);
 }
 
+.media-section {
+    padding: 40px;
+    background: linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%);
+    border-bottom: 2px solid #e2e8f0;
+    animation: fadeIn 1s ease-out;
+}
+
+.media-item {
+    margin-bottom: 40px;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.media-item:last-child {
+    margin-bottom: 0;
+}
+
+.media-item:hover {
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.15);
+    transform: translateY(-2px);
+}
+
+.media-item h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.media-description {
+    font-size: 1rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.media-player {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.media-player:focus {
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+}
+
+video.media-player {
+    background: #000;
+}
+
+audio.media-player {
+    height: 54px;
+}
+
 .controls {
     padding: 20px;
     background: #f8fafc;
@@ -296,6 +360,23 @@ footer a:hover::after {
 
     header h1 {
         font-size: 1.5rem;
+    }
+
+    .media-section {
+        padding: 20px;
+    }
+
+    .media-item {
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+
+    .media-item h2 {
+        font-size: 1.25rem;
+    }
+
+    .media-description {
+        font-size: 0.95rem;
     }
 
     .controls {
