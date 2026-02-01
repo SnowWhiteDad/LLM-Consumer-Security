@@ -138,6 +138,10 @@ audio.media-player {
     height: 54px;
 }
 
+#pdf-controls {
+    display: none;
+}
+
 .controls {
     padding: 20px;
     background: #f8fafc;
