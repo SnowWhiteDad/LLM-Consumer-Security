@@ -74,6 +74,44 @@ header h1:hover {
     transform: scale(1.02);
 }
 
+.author-info {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    animation: fadeIn 1s ease-out 0.3s backwards;
+}
+
+.author-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.author-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.author-name:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
 .media-section {
     padding: 40px;
     background: linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%);
@@ -364,6 +402,23 @@ footer a:hover::after {
 
     header h1 {
         font-size: 1.5rem;
+    }
+
+    .author-info {
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 20px;
+        padding-top: 16px;
+    }
+
+    .author-label {
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+
+    .author-name {
+        font-size: 1.1rem;
+        padding: 6px 16px;
     }
 
     .media-section {
